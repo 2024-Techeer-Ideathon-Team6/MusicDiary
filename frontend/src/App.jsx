@@ -8,6 +8,7 @@ import styled, { keyframes } from 'styled-components';
 import './App.css';
 
 const Body = styled.div`
+  margin-left: 20px;
   display: flex;
   width: 100%;
   height: 100%;
@@ -53,7 +54,7 @@ const Button = styled.button`
   width: 301px;
   height: 68px;
   flex-grow: 0;
-  margin: 349px 239px 153px 92px;
+  margin: 300px 239px 153px 100px;
   border-radius: 19px;
   background-color: #a99bef;
   border: none;
@@ -61,26 +62,34 @@ const Button = styled.button`
   letter-spacing: 2px;
   font-size: 28px;
   font-weight: bold;
+  transition:
+    background-color 0.3s ease,
+    transform 0.1s ease; /* 추가: 트랜지션 효과 */
+  &:hover {
+    background-color: #ff52e2c5; /* 호버 시 배경 색상 변경 */
+  }
 `;
-const Back = styled.img``;
+const Back = styled.img`
+  margin-left: 20px;
+`;
 const ImgPiano = styled.img`
   position: absolute;
   top: 320px;
-  right: 700px;
+  right: 680px;
   animation: ${float} 2s ease-in-out infinite;
 `;
 const ImgWrite = styled.img`
   position: absolute;
-  top: 250px;
-  right: 290px;
+  top: 270px;
+  right: 270px;
   -webkit-backdrop-filter: blur(3px);
   backdrop-filter: blur(3px);
   animation: ${float} 4s ease-in-out infinite;
 `;
 const ImgMusic = styled.img`
   position: absolute;
-  top: 520px;
-  right: 290px;
+  top: 550px;
+  right: 270px;
   -webkit-backdrop-filter: blur(3px);
   backdrop-filter: blur(3px);
   animation: ${float} 6s ease-in-out infinite;
