@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import Calendarsemi from './components/Calendarsemi';
 import styled from 'styled-components';
-import axios from 'axios';
-
+import { useNavigate } from 'react-router-dom';
 const Main = styled.div`
   display: flex;
   justify-content: center;
@@ -13,18 +12,16 @@ const Container = styled.div`
   margin-left: 20px;
   width: 100%;
   height: 100vh;
-  background-image: linear-gradient(132deg, #fff 66%, #e4ceff 94%);
+  background-image: linear-gradient(132deg, #fff 66%, #E4CEFF 94%);
 `;
-
 const Box = styled.div`
   width: 737px;
   display: flex;
   margin: 35px 0 35px 49px;
   padding: 16px 26px 16px 32px;
   border-radius: 25px;
-  background-color: #a99bef;
+  background-color: #A99BEF;
 `;
-
 const Title = styled.h1`
   width: 30px;
   height: 29px;
@@ -40,25 +37,23 @@ const Title = styled.h1`
   text-align: left;
   color: #fff;
 `;
-
 const TitleBox = styled.input`
   width: 650px;
   height: 50px;
   margin: 0 0 0 27px;
   border-radius: 15.4px;
-  background-color: #c8bdfd;
+  background-color: #C8BDFD;
   font-size: 24px;
   border: none;
   padding: 10px;
 `;
-
 const ContentBox = styled.div`
   width: 747px;
   height: 414px;
   margin: 35px 0 0 49px;
   padding: 16px 26px 25px 17px;
   border-radius: 25px;
-  background-color: #a99bef;
+  background-color: #A99BEF;
 `;
 const Content = styled.p`
   width: 54px;
@@ -75,22 +70,19 @@ const Content = styled.p`
   text-align: left;
   color: #fff;
 `;
-
 const ContentBox2 = styled.textarea`
   width: 720px;
   height: 330px;
   margin-top: 10px;
   border-radius: 15.4px;
-  background-color: #c8bdfd;
+  background-color: #C8BDFD;
   border: none;
   padding: 20px;
   font-size: 18px;
 `;
-
 const SaveBack = styled.div`
   margin-left: 480px;
 `;
-
 const Play = styled.button`
   width: 188px;
   height: 71px;
@@ -99,7 +91,7 @@ const Play = styled.button`
   padding: 21px 65px;
   border-radius: 15.4px;
   border: none;
-  background-color: #ffc5c1;
+  background-color: #FFC5C1;
   font-weight: 800;
   font-size: 18px;
   color: #fff;
@@ -110,7 +102,6 @@ const Play = styled.button`
     background-color: #ff52e2c5; /* 호버 시 배경 색상 변경 */
   }
 `;
-
 const Back = styled.button`
   width: 94px;
   height: 71px;
@@ -122,7 +113,7 @@ const Back = styled.button`
   font-size: 18px;
   border: none;
   color: #fff;
-  background-color: #ffc5c1;
+  background-color: #FFC5C1;
   transition:
     background-color 0.3s ease,
     transform 0.1s ease; /* 추가: 트랜지션 효과 */
@@ -130,26 +121,18 @@ const Back = styled.button`
     background-color: #ff52e2c5; /* 호버 시 배경 색상 변경 */
   }
 `;
-
 function Read() {
+  const navigate = useNavigate();
   const [selectedDate, setSelectedDate] = useState(null);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-
+  const handleClick = () => {
+    navigate('/list');
+    console.log(title);
+  };
   const handleDateSelect = (date) => {
     setSelectedDate(date);
   };
-
-  const handlePlayClick = async () => {
-      const response = await axios.post('http://localhost:5000/api/diary', {
-        date: selectedDate,
-        title: title,
-        content: content,
-      })
-    alert("저장 완료!")
-    window.location.href = `http://localhost:3000/read/${response.data.id}`;
-  }
-
   return (
     <>
       <Main>
@@ -159,20 +142,24 @@ function Read() {
             <Title>Title</Title>
             <TitleBox value={title} onChange={(e) => setTitle(e.target.value)} />
           </Box>
-
           <ContentBox>
             <Content>Content</Content>
             <ContentBox2 value={content} onChange={(e) => setContent(e.target.value)} />
           </ContentBox>
-
           <SaveBack>
-            <Play onClick={handlePlayClick}>Save</Play>
-            <Back>Back</Back>
+            <Play>Play</Play>
+            <Back onClick={handleClick}>Back</Back>
           </SaveBack>
         </Container>
       </Main>
     </>
   );
 }
-
 export default Read;
+
+
+
+
+
+
+

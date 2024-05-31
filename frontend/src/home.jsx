@@ -1,20 +1,18 @@
 import { useState } from 'react';
 import React from 'react';
-
+import { useNavigate } from 'react-router-dom';
 import back from './assets/background.svg';
 import modal from './assets/1.svg';
 import modal2 from './assets/2.svg';
 import modal3 from './assets/3.svg';
 import styled, { keyframes } from 'styled-components';
-
 const Body = styled.div`
   margin-left: 20px;
   display: flex;
   width: 100%;
   height: 100%;
-  background-image: linear-gradient(132deg, #fff 66%, #e4ceff 94%);
+  background-image: linear-gradient(132deg, #fff 66%, #E4CEFF 94%);
 `;
-
 // 애니메이션 키프레임 정의
 const float = keyframes`
   0% {
@@ -27,20 +25,19 @@ const float = keyframes`
     transform: translateY(0);
   }
 `;
-
 const TitleContainer = styled.div``;
 const Title = styled.h1`
   width: 100%;
   margin: 140px 149px 48px 98px;
   letter-spacing: 2px;
-  color: #a99bef;
+  color: #A99BEF;
   font-family: Caveat;
   font-size: 70px;
   font-weight: bold;
 `;
 const Sub = styled.p`
   margin: 0 0 0 117px;
-  color: #9e8aff;
+  color: #9E8AFF;
   font-family: AppleSDGothicNeo;
   letter-spacing: normal;
   font-size: 20px;
@@ -56,9 +53,9 @@ const Button = styled.button`
   flex-grow: 0;
   margin: 300px 239px 153px 100px;
   border-radius: 19px;
-  background-color: #a99bef;
+  background-color: #A99BEF;
   border: none;
-  color: #ffffff;
+  color: #FFFFFF;
   letter-spacing: 2px;
   font-size: 28px;
   font-weight: bold;
@@ -94,8 +91,11 @@ const ImgMusic = styled.img`
   backdrop-filter: blur(3px);
   animation: ${float} 6s ease-in-out infinite;
 `;
-
 function Home() {
+  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate('/list');
+  };
   return (
     <>
       <Body>
@@ -105,9 +105,8 @@ function Home() {
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; IT's life!
           </Title>
           <Sub>이제 심심한 블로그 일기는 그만! 자신의 일기에 자신감을!</Sub>
-          <Button>Enter</Button>
+          <Button onClick={handleClick}>Enter</Button>
         </TitleContainer>
-
         <Back src={back} alt="" />
         <ImgPiano src={modal} alt=""></ImgPiano>
         <ImgWrite src={modal2}></ImgWrite>
@@ -116,5 +115,4 @@ function Home() {
     </>
   );
 }
-
 export default Home;
