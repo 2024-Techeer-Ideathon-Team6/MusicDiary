@@ -3,6 +3,8 @@ from dotenv import load_dotenv
 from flask_sqlalchemy import SQLAlchemy
 import openai, os
 import json
+from datetime import date
+
 app = Flask(__name__)
 load_dotenv('.env')
 openai.api_key = os.getenv('GPT_SECRET_KEY')
@@ -10,15 +12,53 @@ app.config['SQLALCHEMY_DATABASE_URI'] = f"mysql+mysqlconnector://{os.environ['MA
 
 db = SQLAlchemy(app)
 
-# class Quiz(db.Model):
-#     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-#     questions = db.relationship('Question', backref='quiz', lazy=True)
+class Diary(db.Model):
+    id = db.Column(db.BigInteger, primary_key=True, autoincrement=True)
+    title = db.Column(db.String(255))
+    content = db.Column(db.Text)
+    music = db.Column(db.JSON)  # JSON 지원 필드
+    created_at = db.Column(db.Date, default=date.today)
 
-# class Question(db.Model):
-#     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-#     quiz_id = db.Column(db.Integer, db.ForeignKey('quiz.id'), nullable=False)
-#     text = db.Column(db.String(255))
-#     answer = db.Column(db.Boolean)
+    def to_dict(self, include_music=False):
+        data = {
+            'id': self.id,
+            'title': self.title,
+            'content': self.content,
+            'created_at': self.created_at.isoformat()
+        }
+        if include_music:
+            data['music'] = self.music
+        return data
+
+@app.route('/api/diary', methods=['POST'])
+def create_diary():
+    data = request.get_json()
+    if not data or 'title' not in data or 'content' not in data:
+        return jsonify({'error': 'Missing data'}), 400
+
+    new_diary = Diary(
+        title=data['title'],
+        content=data['content'],
+        music=data.get('music', {}),  # JSON 필드가 선택적이므로 기본값을 비어 있는 객체로 설정
+        created_at=data.get('created_at', date.today())  # 날짜가 제공되지 않은 경우 오늘 날짜 사용
+    )
+    db.session.add(new_diary)
+    db.session.commit()
+
+    return jsonify({'id': new_diary.id}), 201
+
+@app.route('/api/diary', methods=['GET'])
+def get_diaries():
+    diaries = Diary.query.all()
+    return jsonify([diary.to_dict() for diary in diaries])
+
+@app.route('/api/diary/<int:diary_id>', methods=['GET'])
+def get_diary(diary_id):
+    diary = Diary.query.get(diary_id)
+    if diary:
+        return jsonify(diary.to_dict(include_music=True))
+    else:
+        return jsonify({'error': 'Diary not found'}), 404
 
 # messages = []
 # def get_gpt_response(keyword, number):
@@ -31,34 +71,34 @@ db = SQLAlchemy(app)
 #     chat_response = completion.choices[0].message.content
 #     return chat_response
 
-# @app.before_first_request
-# def initialize():
-#     messages.append({"role":"user", "content":
-#     '''
-#         내가 주제에 대해서 알려주면 해당 주제에 대한 퀴즈 만들어줘.
-#         문제의 형식은 OX 퀴즈이고 아래와 같은 JSON 형식으로 만들고,
-#         answer는 question의 정답이 O 이면 true, X면 false로 해줘.
-#         나중에 퀴즈를 만들 때 다른 텍스트를 줄 필요가 없고, 아래 예시처럼 배열 값만 반환해줘.
-#         예시
-#         [
-#             {
-#                 "question": "임진왜란은 1592년에 발발했다.",
-#                 "answer": true
-#             },
-#             {
-#                 "question": "임진왜란은 1598년에 발발했다.",
-#                 "answer": false
-#             }
-#         ]
-#     '''})
-#     completion = openai.ChatCompletion.create(
-#         model="gpt-3.5-turbo",
-#         messages=messages
-#     )
-#     chat_response = completion.choices[0].message.content
-#     messages.append({"role":"assistant", "content": chat_response})
-#     print("setting complete!")
-#     return chat_response
+@app.before_first_request
+def initialize():
+    # messages.append({"role":"user", "content":
+    # '''
+    #     내가 주제에 대해서 알려주면 해당 주제에 대한 퀴즈 만들어줘.
+    #     문제의 형식은 OX 퀴즈이고 아래와 같은 JSON 형식으로 만들고,
+    #     answer는 question의 정답이 O 이면 true, X면 false로 해줘.
+    #     나중에 퀴즈를 만들 때 다른 텍스트를 줄 필요가 없고, 아래 예시처럼 배열 값만 반환해줘.
+    #     예시
+    #     [
+    #         {
+    #             "question": "임진왜란은 1592년에 발발했다.",
+    #             "answer": true
+    #         },
+    #         {
+    #             "question": "임진왜란은 1598년에 발발했다.",
+    #             "answer": false
+    #         }
+    #     ]
+    # '''})
+    # completion = openai.ChatCompletion.create(
+    #     model="gpt-3.5-turbo",
+    #     messages=messages
+    # )
+    # chat_response = completion.choices[0].message.content
+    # messages.append({"role":"assistant", "content": chat_response})
+    print("setting complete!")
+    return ""# chat_response
 
 # @app.route('/api/quiz', methods=['POST'])
 # def chat():
