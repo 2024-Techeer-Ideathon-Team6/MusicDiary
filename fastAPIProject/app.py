@@ -19,14 +19,16 @@ class Diary(db.Model):
     music = db.Column(db.JSON)  # JSON 지원 필드
     created_at = db.Column(db.Date, default=date.today)
 
-    def to_dict(self):
-        return {
+    def to_dict(self, include_music=False):
+        data = {
             'id': self.id,
             'title': self.title,
             'content': self.content,
-            'music': self.music,
             'created_at': self.created_at.isoformat()
         }
+        if include_music:
+            data['music'] = self.music
+        return data
 
 @app.route('/api/diary', methods=['POST'])
 def create_diary():
@@ -44,6 +46,19 @@ def create_diary():
     db.session.commit()
 
     return jsonify({'id': new_diary.id}), 201
+
+@app.route('/api/diary', methods=['GET'])
+def get_diaries():
+    diaries = Diary.query.all()
+    return jsonify([diary.to_dict() for diary in diaries])
+
+@app.route('/api/diary/<int:diary_id>', methods=['GET'])
+def get_diary(diary_id):
+    diary = Diary.query.get(diary_id)
+    if diary:
+        return jsonify(diary.to_dict(include_music=True))
+    else:
+        return jsonify({'error': 'Diary not found'}), 404
 
 # messages = []
 # def get_gpt_response(keyword, number):
