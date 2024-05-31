@@ -4,6 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 import openai, os
 import json
 from datetime import date, datetime
+from flask_cors import cross_origin
 
 app = Flask(__name__)
 load_dotenv('.env')
@@ -31,6 +32,7 @@ class Diary(db.Model):
         return data
 
 @app.route('/api/diary', methods=['POST'])
+@cross_origin()
 def create_diary():
     data = request.get_json()
     if not data or 'title' not in data or 'content' not in data:
@@ -60,6 +62,7 @@ def create_diary():
     return jsonify({'id': new_diary.id}), 201
 
 @app.route('/api/diary', methods=['GET'])
+@cross_origin()
 def get_diaries():
     date_str = request.args.get('date')
     if date_str:
@@ -74,6 +77,7 @@ def get_diaries():
     return jsonify([diary.to_dict() for diary in diaries])
 
 @app.route('/api/diary/<int:diary_id>', methods=['GET'])
+@cross_origin()
 def get_diary(diary_id):
     diary = Diary.query.get(diary_id)
     if diary:

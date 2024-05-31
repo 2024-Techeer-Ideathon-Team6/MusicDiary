@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import axios from 'axios';
 import Calendarsemi from './components/Calendarsemi';
 
 import styled, { keyframes } from 'styled-components';
@@ -126,6 +128,27 @@ const Back = styled.button`
 `;
 
 function Read() {
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const id = queryParams.get('id');
+
+  const [diary, setDiary] = useState({});
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`http://localhost:5000/api/diary/${id}`);
+        setDiary(response.data);
+      } catch (error) {
+        console.error('Error fetching diary:', error);
+      }
+    };
+
+    if (id) {
+      fetchData();
+    }
+  }, [id]);
+
   const handleDateSelect = (date) => {
     setSelectedDate(date);
   };
@@ -137,17 +160,16 @@ function Read() {
         <Container>
           <Box>
             <Title>Title</Title>
-            <TitleBox></TitleBox>
+            <TitleBox>{diary.title}</TitleBox>
           </Box>
 
           <ContentBox>
             <Content>Content</Content>
-            <ContentBox2></ContentBox2>
+            <ContentBox2>{diary.content}</ContentBox2>
           </ContentBox>
 
           <SaveBack>
-            <Play>Play</Play>
-
+            <Play onClick={() => console.log(diary.music)}>Play</Play>
             <Back>Back</Back>
           </SaveBack>
         </Container>

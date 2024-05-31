@@ -25,107 +25,12 @@
       player.loader.decodeAfterLoading(
         audioContext,
         "_tone_0400_Chaos_sf2_file"
-      ); // Bass
-
-      // const musicSheet = {
-      //   tracks: [
-      //     {
-      //       instrument: "_tone_0000_JCLive_sf2_file", // Piano (Chords)
-      //       notes: [
-      //         { note: [76, 80, 83], start: 0, duration: 0.75 },
-      //         { note: [79, 83, 86], start: 0.75, duration: 0.25 },
-      //         { note: [76, 80, 83], start: 1.5, duration: 1 },
-      //         { note: [72, 76, 79], start: 3, duration: 0.5 },
-      //         { note: [74, 77, 81], start: 4, duration: 0.5 },
-      //         { note: [77, 81, 84], start: 5, duration: 0.25 },
-      //         { note: [74, 77, 81], start: 6, duration: 0.75 },
-      //         { note: [72, 76, 79], start: 7, duration: 1 },
-      //       ],
-      //     },
-      //     {
-      //       instrument: "_tone_0000_JCLive_sf2_file", // Piano (Melody)
-      //       notes: [
-      //         { note: 76, start: 0, duration: 0.25 },
-      //         { note: 80, start: 0.25, duration: 0.25 },
-      //         { note: 83, start: 0.75, duration: 0.75 },
-      //         { note: 76, start: 1.5, duration: 0.25 },
-      //         { note: 80, start: 2, duration: 0.5 },
-      //         { note: 83, start: 2.5, duration: 0.5 },
-      //         { note: 76, start: 3, duration: 0.25 },
-      //         { note: 79, start: 3.5, duration: 0.25 },
-      //         { note: 72, start: 4, duration: 0.25 },
-      //         { note: 76, start: 4.25, duration: 0.5 },
-      //         { note: 79, start: 5, duration: 0.25 },
-      //         { note: 72, start: 5.25, duration: 0.75 },
-      //         { note: 74, start: 6, duration: 0.25 },
-      //         { note: 77, start: 6.25, duration: 0.25 },
-      //         { note: 81, start: 6.5, duration: 0.5 },
-      //         { note: 74, start: 7, duration: 0.25 },
-      //         { note: 77, start: 7.5, duration: 0.5 },
-      //       ],
-      //     },
-      //     {
-      //       instrument: "_tone_0400_Chaos_sf2_file", // Bass
-      //       notes: [
-      //         { note: 43, start: 0, duration: 0.5 },
-      //         { note: 45, start: 0.5, duration: 0.5 },
-      //         { note: 47, start: 1, duration: 1 },
-      //         { note: 48, start: 2.5, duration: 0.75 },
-      //         { note: 47, start: 3.5, duration: 0.25 },
-      //         { note: 45, start: 4, duration: 0.5 },
-      //         { note: 43, start: 5, duration: 0.75 },
-      //         { note: 41, start: 6, duration: 0.5 },
-      //         { note: 43, start: 7, duration: 0.5 },
-      //         { note: 45, start: 7.5, duration: 0.5 },
-      //       ],
-      //     },
-      //     {
-      //       instrument: "_tone_0240_SoundBlasterOld_sf2", // Drum
-      //       notes: [
-      //         { note: 35, start: 0, duration: 0.25 },
-      //         { note: 38, start: 0.25, duration: 0.25 },
-      //         { note: 42, start: 0.5, duration: 0.25 },
-      //         { note: 45, start: 0.75, duration: 0.25 },
-      //         { note: 35, start: 1, duration: 0.25 },
-      //         { note: 38, start: 1.25, duration: 0.25 },
-      //         { note: 42, start: 1.75, duration: 0.25 },
-      //         { note: 45, start: 2, duration: 0.25 },
-      //         { note: 35, start: 2.5, duration: 0.25 },
-      //         { note: 38, start: 3, duration: 0.25 },
-      //         { note: 42, start: 3.5, duration: 0.25 },
-      //         { note: 45, start: 4, duration: 0.25 },
-      //         { note: 35, start: 4.5, duration: 0.25 },
-      //         { note: 38, start: 5, duration: 0.25 },
-      //         { note: 42, start: 5.5, duration: 0.25 },
-      //         { note: 45, start: 6, duration: 0.25 },
-      //         { note: 35, start: 6.5, duration: 0.25 },
-      //         { note: 38, start: 7, duration: 0.25 },
-      //         { note: 42, start: 7.5, duration: 0.25 },
-      //         { note: 45, start: 7.75, duration: 0.25 },
-      //       ],
-      //     },
-      //   ],
-      // };
+      );
 
       const musicSheet = {
         tracks: [
           {
-            notes: [
-              { note: 72, start: 0, duration: 0.25 },
-              { note: 74, start: 0.5, duration: 0.25 },
-              { note: 76, start: 1, duration: 0.25 },
-              { note: 77, start: 1.5, duration: 0.25 },
-              { note: 79, start: 2, duration: 0.25 },
-              { note: 81, start: 2.5, duration: 0.25 },
-              { note: 83, start: 3, duration: 0.25 },
-              { note: 84, start: 3.5, duration: 0.25 },
-              { note: 86, start: 4, duration: 0.25 },
-              { note: 88, start: 4.5, duration: 0.25 },
-              { note: 90, start: 5, duration: 0.25 },
-              { note: 92, start: 5.5, duration: 0.25 },
-              { note: 93, start: 6, duration: 0.25 },
-              { note: 95, start: 6.5, duration: 0.25 },
-            ],
+            notes: [{ note: 72, start: 0, duration: 0.25 }],
           },
         ],
       };

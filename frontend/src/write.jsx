@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Calendarsemi from './components/Calendarsemi';
 import styled from 'styled-components';
+import axios from 'axios';
 
 const Main = styled.div`
   display: flex;
@@ -139,6 +140,16 @@ function Read() {
     setSelectedDate(date);
   };
 
+  const handlePlayClick = async () => {
+      const response = await axios.post('http://localhost:5000/api/diary', {
+        date: selectedDate,
+        title: title,
+        content: content,
+      })
+    alert("저장 완료!")
+    window.location.href = `http://localhost:3000/read/${response.data.id}`;
+  }
+
   return (
     <>
       <Main>
@@ -155,7 +166,7 @@ function Read() {
           </ContentBox>
 
           <SaveBack>
-            <Play>Play</Play>
+            <Play onClick={handlePlayClick}>Save</Play>
             <Back>Back</Back>
           </SaveBack>
         </Container>
