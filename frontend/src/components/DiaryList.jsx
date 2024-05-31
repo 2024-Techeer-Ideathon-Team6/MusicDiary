@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 
 const Wrapper = styled.div`
-    width: 670px;
+    width: 700px;
     height: 190px;
     margin-block: 20px;
     padding: 0;
@@ -29,7 +29,7 @@ const ContentContainer = styled.div`
 
 const DateContainer = styled.div`
     background-color: #${props => props.nowcolor ?"FF94A4":"FFC5C1"};
-    width: 180px;
+    width: 200px;
     height: 180px;
     margin: 0;
     padding: 0;
@@ -80,7 +80,7 @@ const MonthText = styled.p`
 `;
 function DiaryList(props){
     // title, onClick
-    const {title, content, day, month, onClick, date, nowDate} = props;
+    const {title, content, day, month, onClick, nowDate} = props;
 
 
     const isNow = useRef(false)
@@ -91,12 +91,12 @@ function DiaryList(props){
     return (
         <Wrapper onClick={onClick}>
             <ContentContainer nowcolor={isNow.current ? 1:0} >
-                <TitleText>{title || "제목"}</TitleText>
-                <ContentText>{content || "내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용"}</ContentText>
+                <TitleText>{title || ""}</TitleText>
+                <ContentText>{content || ""}</ContentText>
             </ContentContainer>
             <DateContainer nowcolor={isNow.current ? 1:0} >
-                <DayText>{day || "23"}</DayText>
-                <MonthText>{month || "March"}</MonthText>
+                <DayText>{day || ""}</DayText>
+                <MonthText>{month || ""}</MonthText>
             </DateContainer>
             
         </Wrapper>

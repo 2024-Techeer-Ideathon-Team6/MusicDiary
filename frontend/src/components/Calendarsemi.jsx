@@ -10,6 +10,7 @@ const CalendarContainer = styled.div`
   height: 600px;
   border-radius: 25px;
   padding-top: 30px;
+  margin-left: 140px;
 `;
 
 const DaysGrid = styled.div`
@@ -99,8 +100,12 @@ const Calendarsemi = ({ onDateSelect }) => {
   const handleDayClick = (day) => {
     setSelectedDay(day);
     const selectedDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
-    const formattedDate = `${selectedDate.getFullYear()}.${(selectedDate.getMonth() + 1).toString().padStart(2, '0')}.${selectedDate.getDate().toString().padStart(2, '0')}`;
-    onDateSelect(formattedDate);
+    const nextDate = day < daysInMonth ? new Date(currentDate.getFullYear(), currentDate.getMonth(), day + 1) : null;
+
+    const formattedDate = `${selectedDate.getFullYear()}${(selectedDate.getMonth() + 1).toString().padStart(2, '0')}${selectedDate.getDate().toString().padStart(2, '0')}`;
+    const formattedNextDate = nextDate ? `${nextDate.getDate().toString().padStart(2, '0')}` : null;
+    
+    onDateSelect(formattedDate, formattedNextDate);
   };
 
   const handlePreviousMonth = () => {

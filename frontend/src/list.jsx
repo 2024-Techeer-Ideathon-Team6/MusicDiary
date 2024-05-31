@@ -1,76 +1,62 @@
-import { useState } from 'react';
-import back from './assets/background.svg';
-import modal from './assets/1.svg';
-import modal2 from './assets/2.svg';
-import modal3 from './assets/3.svg';
+import React, { useState } from 'react';
+import Calendarsemi from './components/Calendarsemi';
 import styled from 'styled-components';
+import DiaryList from './components/DiaryList';
 
-import './App.css';
-
-const Body = styled.div`
+const Container = styled.div`
   display: flex;
-  width: 100%;
-  height: 100%;
+  align-items: center;
+  background-color: #FFFFFF;
+  padding-inline: 50px;
+  width: calc(100vw - 115px);
+  height: calc(100vh - 25px);
+  background-image: linear-gradient(132deg, #fff 66%, #E4CEFF 94%);
 `;
-const TitleContainer = styled.div``;
-const Title = styled.h1`
-  width: 100%;
-  height: 202px;
-  margin: 179px 149px 20px 98px;
+const ListContainer = styled.div`
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  width:800px;
+`;
 
-  color: #a99bef;
-  font-family: Caveat;
-  font-size: 80px;
-  font-weight: bold;
-`;
-const Sub = styled.p`
-  height: 25px;
-  margin: 0 0 0 117px;
-  color: #9e8aff;
-  font-family: AppleSDGothicNeo;
-  font-size: 22px;
-  font-weight: 600;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: normal;
-  letter-spacing: normal;
-`;
-const Button = styled.button`
-  width: 301px;
-  height: 68px;
-  flex-grow: 0;
-  margin: 349px 239px 153px 92px;
-  border-radius: 19px;
-  background-color: #a99bef;
-  border: none;
-  color: #ffffff;
-  font-size: 28px;
-`;
-const Img = styled.img``;
-const Img2 = styled.img``;
-const Img3 = styled.img``;
-const Img4 = styled.img``;
+function Testtemp() {
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [nextDay, setNextDay] = useState(null);
 
-function App() {
+  
+  var monthNames = ["January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"
+  ];
+
+
+
+  let month = selectedDate && monthNames[Number(selectedDate.substr(4,2))-1]
+  let day = selectedDate && Number(selectedDate.substr(6))
+  let title = ""
+  let content = ""
+
+  const handleDateSelect = (date, nextDate) => {
+    setSelectedDate(date);
+    setNextDay(nextDate);
+  };
   return (
-    <>
-      <Body>
-        <TitleContainer>
-          <Title>
-            music? diary? <br />
-            IT's life!
-          </Title>
-          <Sub>이제 심심한 블로그 일기는 그만! 자신의 일기에 자신감을!</Sub>
-          <Button>START</Button>
-        </TitleContainer>
-        {/* 
-        <Img src={back} alt="" />
-        <Img2 src={modal} alt=""></Img2>
-        <Img3 src={modal2}></Img3>
-        <Img4 src={modal3}></Img4> */}
-      </Body>
-    </>
+    <Container>
+      <Calendarsemi onDateSelect={handleDateSelect} />
+      {/* {selectedDate && <p>선택된 날짜: {selectedDate}</p>}
+      {selectedDate && <p>월: {Number(selectedDate.substr(5,2))}</p>}
+      {selectedDate && <p>일: {Number(selectedDate.substr(8))}</p>} */}
+      {/* {nextDay && <p>다음날: {Number(nextDay)}</p>} */}
+
+      <ListContainer>
+        
+        <DiaryList nowDate={day} month={day==1 ? "" : month} day={day ? day-1:""} title={title} content={content}></DiaryList>
+        <DiaryList nowDate={day} month={month} day={day} title={title} content={content}></DiaryList>
+        <DiaryList nowDate={day} month={nextDay ? month : ""} day={Number(nextDay)} title={title} content={content}></DiaryList>
+      </ListContainer>
+    </Container>
   );
 }
 
-export default App;
+export default Testtemp;
