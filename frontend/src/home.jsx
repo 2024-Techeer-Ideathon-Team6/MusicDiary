@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import React from 'react';
+
 import back from './assets/background.svg';
 import modal from './assets/1.svg';
 import modal2 from './assets/2.svg';
@@ -93,7 +95,7 @@ const ImgMusic = styled.img`
   animation: ${float} 6s ease-in-out infinite;
 `;
 
-function App() {
+function Home() {
   return (
     <>
       <Body>
@@ -115,4 +117,4 @@ function App() {
   );
 }
 
-export default App;
+export default Home;
