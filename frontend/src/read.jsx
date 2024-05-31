@@ -1,7 +1,14 @@
 import React from 'react';
+import Calendarsemi from './components/Calendarsemi';
 
 import styled, { keyframes } from 'styled-components';
 
+const Main = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-left: 50px;
+  margin-top: 80px;
+`;
 const Container = styled.div`
   margin-left: 20px;
   width: 100%;
@@ -117,26 +124,34 @@ const Back = styled.button`
     background-color: #ff52e2c5; /* 호버 시 배경 색상 변경 */
   }
 `;
+
 function Read() {
+  const handleDateSelect = (date) => {
+    setSelectedDate(date);
+  };
+
   return (
     <>
-      <Container>
-        <Box>
-          <Title>Title</Title>
-          <TitleBox></TitleBox>
-        </Box>
+      <Main>
+        <Calendarsemi onDateSelect={handleDateSelect} />
+        <Container>
+          <Box>
+            <Title>Title</Title>
+            <TitleBox></TitleBox>
+          </Box>
 
-        <ContentBox>
-          <Content>Content</Content>
-          <ContentBox2></ContentBox2>
-        </ContentBox>
+          <ContentBox>
+            <Content>Content</Content>
+            <ContentBox2></ContentBox2>
+          </ContentBox>
 
-        <SaveBack>
-          <Play>Play</Play>
+          <SaveBack>
+            <Play>Play</Play>
 
-          <Back>Back</Back>
-        </SaveBack>
-      </Container>
+            <Back>Back</Back>
+          </SaveBack>
+        </Container>
+      </Main>
     </>
   );
 }

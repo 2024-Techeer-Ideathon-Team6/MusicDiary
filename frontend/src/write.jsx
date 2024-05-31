@@ -1,7 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
+import Calendarsemi from './components/Calendarsemi';
+import styled from 'styled-components';
 
-import styled, { keyframes } from 'styled-components';
-
+const Main = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-left: 50px;
+  margin-top: 80px;
+`;
 const Container = styled.div`
   margin-left: 20px;
   width: 100%;
@@ -34,12 +40,15 @@ const Title = styled.h1`
   color: #fff;
 `;
 
-const TitleBox = styled.div`
+const TitleBox = styled.input`
   width: 650px;
-  height: 64px;
+  height: 50px;
   margin: 0 0 0 27px;
   border-radius: 15.4px;
   background-color: #c8bdfd;
+  font-size: 24px;
+  border: none;
+  padding: 10px;
 `;
 
 const ContentBox = styled.div`
@@ -52,7 +61,7 @@ const ContentBox = styled.div`
 `;
 const Content = styled.p`
   width: 54px;
-  height: 29px;
+  height: 0px;
   flex-grow: 0;
   margin: 0 27px 35px 0;
   font-family: Pretendard;
@@ -66,29 +75,32 @@ const Content = styled.p`
   color: #fff;
 `;
 
-const ContentBox2 = styled.div`
-  width: 745px;
-  height: 350px;
-  margin: 26px 0 0 4px;
+const ContentBox2 = styled.textarea`
+  width: 720px;
+  height: 330px;
+  margin-top: 10px;
   border-radius: 15.4px;
   background-color: #c8bdfd;
+  border: none;
+  padding: 20px;
+  font-size: 18px;
 `;
 
 const SaveBack = styled.div`
   margin-left: 480px;
 `;
 
-const Save = styled.button`
+const Play = styled.button`
   width: 188px;
   height: 71px;
   flex-grow: 0;
   margin: 0 0 0 32px;
   padding: 21px 65px;
   border-radius: 15.4px;
-  font-weight: 800;
-  font-size: 18px;
   border: none;
   background-color: #ffc5c1;
+  font-weight: 800;
+  font-size: 18px;
   color: #fff;
   transition:
     background-color 0.3s ease,
@@ -105,9 +117,9 @@ const Back = styled.button`
   margin: 21px 0 55px 44px;
   padding: 21px 17px 21px 18px;
   border-radius: 15.4px;
-  border: none;
   font-weight: 800;
   font-size: 18px;
+  border: none;
   color: #fff;
   background-color: #ffc5c1;
   transition:
@@ -117,28 +129,39 @@ const Back = styled.button`
     background-color: #ff52e2c5; /* 호버 시 배경 색상 변경 */
   }
 `;
-function Write() {
+
+function Read() {
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+
+  const handleDateSelect = (date) => {
+    setSelectedDate(date);
+  };
+
   return (
     <>
-      <Container>
-        <Box>
-          <Title>Title</Title>
-          <TitleBox></TitleBox>
-        </Box>
+      <Main>
+        <Calendarsemi onDateSelect={handleDateSelect} />
+        <Container>
+          <Box>
+            <Title>Title</Title>
+            <TitleBox value={title} onChange={(e) => setTitle(e.target.value)} />
+          </Box>
 
-        <ContentBox>
-          <Content>Content</Content>
-          <ContentBox2></ContentBox2>
-        </ContentBox>
+          <ContentBox>
+            <Content>Content</Content>
+            <ContentBox2 value={content} onChange={(e) => setContent(e.target.value)} />
+          </ContentBox>
 
-        <SaveBack>
-          <Save>Save</Save>
-
-          <Back>Back</Back>
-        </SaveBack>
-      </Container>
+          <SaveBack>
+            <Play>Play</Play>
+            <Back>Back</Back>
+          </SaveBack>
+        </Container>
+      </Main>
     </>
   );
 }
 
-export default Write;
+export default Read;
