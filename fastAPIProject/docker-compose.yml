@@ -1,10 +1,40 @@
 version: "3.8"
 
+volumes:
+  db-config:
+  db-data:
+    name: db-data
+
 services:
-  mysqldb:
-    build: ./db
-    container_name: mysqldb
-    env_file:
-      - "./db/.env"
+  db:
+    image: mariadb
+    container_name: db
     ports:
-      - "3306:3306"
+      - 3306:3306
+    expose:
+      - "3306"
+    restart: unless-stopped
+    volumes:
+      - db-config:/etc/mysql
+      - db-data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MARIADB_PASSWORD}
+      MYSQL_PASSWORD: ${MARIADB_PASSWORD}
+      MYSQL_DATABASE: ${MARIADB_DATABASE}
+      MYSQL_TCP_PORT: ${MARIADB_PORT}
+      MYSQL_USER: ${MARIADB_USER}
+      TZ: Asia/Seoul
+    # command:
+    #   [
+    #     "mysqld",
+    #     "--lower_case_table_names=1",
+    #     "--character-set-server=utf8mb4",
+    #     "--collation-server=utf8mb4_bin",
+    #     "--default-time-zone=+09:00",
+    #   ]
+    networks:
+      - default
+
+networks:
+  default:
+    driver: bridge
